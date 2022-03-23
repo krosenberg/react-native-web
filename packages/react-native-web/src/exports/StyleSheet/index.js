@@ -71,7 +71,8 @@ const absoluteFill = create({ x: { ...absoluteFillObject } }).x;
 function create(styles: Object): {| [key: string]: { [key: string]: any } |} {
   Object.keys(styles).forEach((key) => {
     const styleObj = styles[key];
-    if (styleObj != null) {
+    // Only compile at runtime if the style is not already compiled
+    if (styleObj != null && styleObj.$$css !== true) {
       let compiledStyles;
       if (key.indexOf('$raw') > -1) {
         compiledStyles = compileAndInsertReset(styleObj, key.split('$raw')[0]);
